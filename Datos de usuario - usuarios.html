@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="../css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/styless.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <title>Datos de usuario</title>
+    <style>
+        h1{
+            color:white;
+        }
+    </style>
+</head>
+<body>
+    <form action="#" method="post" >
+    <div class="container id-fluid">
+        <br>
+<div class="col-xs-12">
+<h1>LISTA DE USUARIO</h1>
+<br>
+<div>
+    <a class ="btn btn-success" href ="../Registro.php"> Nuevo usuarios +
+    <i class="fa fa-plus" aria-hidden="true"></i></a>
+    <a class="btn btn-warning" href="../Login.html"> Cerrar sesion 
+        <i class="fa fa-power-off" aria-hidden="true"></i>
+    </a>
+<a class ="btn btn-primary" href="../includes/reporte.php">PDF
+    <a class="fa fa-file-pdf-o" aria-hidden="true"></i>
+    </a>
+</div> 
+ <br>
+ <br>
+</form>
+<table class ="table table-strip table-dark" id="table-id">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Password</th>
+            <th>Telefono</th>
+            <th>Fecha</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $conexion =mysqli_connect("localhost", "root", "", "usuario");
+        $sql="SELECT * FROM usuarios";
+        $dato = mysqli_query($conexion, $sql);
+        if($dato->num_rows > 0) {
+            while($fila=mysqli_fetch_assoc($dato)){
+                ?>
+                <tr>
+                    <td><?php echo $fila['nombre'];?></td>
+                    <td><?php echo $fila['correo'];?></td>
+                    <td><?php echo $fila['password'];?></td>
+                    <td><?php echo $fila['telefono'];?></td>
+                    <td><?php echo $fila['fecha'];?></td>
+                    <td>
+                        <a class ="btn btn-warning" href ="editar_usuario.php?id=<?php echo $fila['id']?> ">Editar</a>
+                        <a class ="btn btn-danger" href ="eliminar_usuario.php?id=<?php echo $fila['id']?> "> Eliminar</a>
+                    </td>
+                </tr>
+              <?php 
+              } 
+            }else{
+                ?>
+                <tr>class="text-center">
+                    <td colspan="16">No hay datos</td>
+                </tr>
+                <?php
+            }
+        ?>
+        </tbody>
+</div>
+</div>
+
+</body>
+</table>
+</html>
