@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Galería</title>
+    <link rel="stylesheet" href="csss.css">
+</head>
+<body>
+    <header>
+        <header>
+            <h1>Mi Galería</h1>
+        </header>
+        
+    </header>
+    <main>
+        <section class="gallery">
+            <div class="gallery-item" onclick="openModal(this.querySelector('img'));">
+                <img src="imagen1.jpg" alt="Descripción de la imagen 1">
+            </div>
+            <div class="gallery-item" onclick="openModal(this.querySelector('img'));">
+                <img src="imagen2.jpg" alt="Descripción de la imagen 1">
+            </div>
+            <div class="gallery-item" onclick="openModal(this.querySelector('img'));">
+                <img src="imagen3.jpg" alt="Insignia institucional">
+                <p>Insignia institucional</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(this.querySelector('img'));">
+                <img src="Imagen4.jpeg" alt="Animales en australia">
+                <p>Animales en australia</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(this.querySelector('img'));">
+                <img src="Imagen6.jpeg" alt="El Profesor dictando clase y/o charla a los estudiantes">
+                <p>El Profesor dictando clase y/o charla<br>
+                    a los estudiantes</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(this.querySelector('img'));">
+                <img src="imagen9.jpeg" alt="El Profesor dictando clase y/o charla a los estudiantes"> 
+                <p>El Profesor dictando clase y/o charla<br>
+                    a los estudiantes</p>
+            </div>
+            <div class="gallery-item" onclick="openModal(this.querySelector('img'));">
+                <img src="imagen10.jpeg" alt="El Profesor dictando clase y/o charla a los estudiantes">
+                <p>El Profesor dictando clase y/o charla<br>
+                     a los estudiantes</p>
+            </div>
+            
+            </div>
+        </section>
+    </main>
+    <section class="upload-section">
+        <h2>Subir Nuevo Archivo</h2>
+        <form id="upload-form" enctype="multipart/form-data">
+            <input type="file" id="file-input" accept="image/*" required>
+            <input type="text" id="description" placeholder="Descripción" required>
+            <input type="month" id="upload-date" required>
+            <button type="submit">Subir Imagen</button>
+        </form>
+    </section>
+    
+    <!-- Modal -->
+<div id="modal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modal-img">
+    <div id="caption"></div>
+</div>
+<script>
+    function openModal(imgElement) {
+        var modal = document.getElementById("modal");
+        var modalImg = document.getElementById("modal-img");
+        var captionText = document.getElementById("caption");
+    
+        modal.style.display = "block";
+        modalImg.src = imgElement.src;
+        captionText.innerHTML = imgElement.alt;
+    }
+    
+    function closeModal() {
+        var modal = document.getElementById("modal");
+        modal.style.display = "none";
+    }
+    
+    </script>
+    
+    <script>
+        document.getElementById("upload-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evitar el envío del formulario
+        
+            const fileInput = document.getElementById("file-input");
+            const description = document.getElementById("description").value;
+            const uploadDate = document.getElementById("upload-date").value;
+        
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Crear un nuevo elemento de imagen en la galería
+                    const gallery = document.querySelector(".gallery");
+                    const newItem = document.createElement("div");
+                    newItem.className = "gallery-item";
+                    newItem.onclick = function() { openModal(this.querySelector('img')); };
+                    newItem.innerHTML = `
+                        <img src="${e.target.result}" alt="${description}">
+                        <p>${description}</p>
+                        <p>Fecha de subida: ${uploadDate}</p>
+                    `;
+                    gallery.appendChild(newItem);
+        
+                    // Limpiar el formulario
+                    document.getElementById("upload-form").reset();
+                };
+                reader.readAsDataURL(file); // Leer la imagen como Data URL
+            }
+        });
+        </script>
+        
+
+    <footer>
+        <p>© 2024 Isaac Newton</p>
+    </footer>
+    <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modal-img">
+        <div id="caption"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
